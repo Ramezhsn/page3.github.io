@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - 3rd page</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<html>
+    <head>
+     <meta charset="utf-8" />
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+      <link type="text/css" rel="stylesheet" href="stylesheet.css" />
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+      <script src="script.js" type="text/javascript"></script>
+<style>
+  html, body {
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #header {
+  position: relative;
+}
+.hazard-box {
+    margin-bottom: 30px; 
+    border-bottom: 1px solid #ddd; 
+    padding-bottom: 5px; 
+}
+.hazard-exposure {
+    margin-bottom: 5px; 
+    border-bottom: 1px solid #ddd; 
+    padding-bottom: 5px; 
+}
+#header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #000; 
+}
+  #districtFilter, #hazardFilter {
+    flex-basis: 50%;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+  }
+  
+  #mainContainer {
+    display: flex;
+ 
+  }
+
+  
+  #contentContainer {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .mapView {
+    margin: 10px;
+    height: 550px !important; 
+    outline: 10px solid White;
+    border: 10px solid white;
+    position: absolute;
+    width: 30%;
+    bottom: -550;
+    
+  }
+  #mapContainer {
+    flex: 1; 
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+  }
+  
+  
+  
+  #infoBoxes {
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 68%;
+  }
+  #infoBoxes1 {
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  #hazardBox, #durationBox {
+    margin-bottom: 10px;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  select {
+    width: 200px;
+    padding: 5px;
+    margin-top: 5px;
+  }
+  
+  #header-title {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  
+  #header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+  }
+  #symbol{
+    background:white;
+    border-radius:10px;
+    margin-top:14px; 
+  }
+  
+  #box1 , #box2{
+    border: 1px solid red;
+    padding:10px;
+    height:60vh;
+    background:white;
+    display: flex;
+    align-items: center;
+  }
+.box-title{
+    text-align: center;
+    font-family: roboto slab;
+    font-size: 25px;;
+
+}
+.box-size3{
+  width: 55%;;
+}
+.box-size33{
+  width: 25%;;
+}
+#para{
+  margin-left: 20px;;
+}
+.icon-display a{
+  color: black;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  display: block;
+  padding-bottom: 10px;
+}
+
+#para select{
+  font-size: 18px;
+  padding: 10px;
+  margin-top: 20px;
+  width:250px;
+  border-radius: 8px;;
+  
+}
+
+#info-links a {
+  color: black;
+  text-decoration: none;
+  font-family: roboto slab;
+  font-size: 20px;
+  transition: 0.5s;
+
+}
+#info-links a:hover {
+color: steelblue;
+border-left: 1px solid steelblue;
+padding-left: 5px;
+transition: 0.4s;
+}
+.box-size1{
+  width: 30%;
+  text-align: center;
+  
+}
+.box-size1 button{
+  background-color: white;
+  padding: 20px 0px;
+  border-radius: 4px;
+  margin-top: 20px;
+  margin-left: 50px;
+  color: red;
+  border-color: red;
+  width: 250px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+.box-size1 button:hover{
+  transform: scale(1.05);
+  transition: 0.4s;
+}
+#radarChartContainer {
+  z-index: 1000;
+  width: 33% !important;
+  display: flex;
+  justify-content: center;
+}
+.changeable{
+  width: 33%;
+  display: flex;
+  justify-content: space-around;
+}
+.dropdownmenu ul, .dropdownmenu li {
+	margin: 0;
+	padding: 0;
+
+}
+.dropdownmenu ul {
+	list-style: none;
+	width: 100%;
+}
+.dropdownmenu li {
+	float: left;
+	position: relative;
+	width:auto;
+}
+.dropdownmenu a {
+	color: #FFFFFF;
+	display: block;
+	font: bold 12px/20px sans-serif;
+	padding: 10px 25px;
+	text-align: center;
+	text-decoration: none;
+	-webkit-transition: all .25s ease;
+	-moz-transition: all .25s ease;
+	-ms-transition: all .25s ease;
+	-o-transition: all .25s ease;
+	transition: all .25s ease; 
+}
+.dropdownmenu li:hover a {
+	background: #000000;
+}
+#submenu {
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	top: 35px;
+	visibility: hidden;
+	z-index: 1;
+}
+li:hover ul#submenu {
+	opacity: 1;
+	top: 40px;	/* adjust this as per top nav padding top & bottom comes */
+	visibility: visible;
+}
+#submenu li {
+	float: none;
+	width: 100%;
+}
+#submenu a:hover {
+	background: #DF4B05;
+}
+#submenu a {
+	background-color:#000000;
+}
+  </style>
+    </head>
+    <body>
+    <div id="header">
+        <div id="header-content">
+            <div id="districtFilter">
+                <div id="districtFilterHeader">
+                  <label for="districtSelect"><b>Select District:</b></label>
+                </div>
+                <div id="districtFilterDropdown">
+                  <input type="text" id="districtSelect" list="districts" placeholder="Search...">
+                  <datalist id="districts">
+                  </datalist>
+                  <button id="clearButton">Clear</button>
+             
+                </div>
+              </div>
+              <div class="text-right">
+                <a style="color:red;margin-right: 180px;" href="url">More information about EVCA</a>
+
+              </div>
+        </div>
+      
+      </div>
+      
+      <!-- header End -->
+      <div id="mainContainer">
+        <div id="infoBoxes1">
+            <div id="radarChartContainer">
+                <canvas id="radarChart" width="350" height="250"></canvas>
+                    </div>
+<div class="changeable">
+          <div class="box-size33">
+            <p class="box-title"><b>Main Hazards</b></p>
+             <div class="hazard-box" id="hazardBox1"></div>
+    <div class="hazard-box" id="hazardBox2"></div>
+    <div class="hazard-box" id="hazardBox3"></div>
+            <div id="MainHazardcontent">
+            <p id="MainHazardTitle"></p>
+            <div class="icon-display" id="MainHazardIcons">
+                </div>
+              </p>
+            </div>
+          </div>
+       <div class="box-size3">
+         <p class="box-title"><b>Hazard exposure</b></p>
+         <div class="hazard-exposure" id="hazardexposure1"></div>
+    <div class="hazard-exposure" id="hazardexposure2"></div>
+   <div class="hazard-exposure" id="hazardexposure3"></div>
+         <div class="hazard-exposure" id="hazardexposure4"></div>
+    <div class="hazard-exposure" id="hazardexposure5"></div>
+   <div class="hazard-exposure" id="hazardexposure6"></div>
+         <div class="hazard-exposure" id="hazardexposure7"></div>
+        <div id="hazardExposureContent">
+            <p id="hazardExposureTitle"></p>
+            <div class="icon-display" id="hazardExposureIcons">
+                <!-- Placeholder icons will be dynamically updated -->
+            </div>
+              </p>
+            </div>
+          </div>
+    </div>
+          <div class="box-size1">
+            <p class="box-title"><b>Actions and Next steps</b></p>
+            <p style="font-size:15px;" class="box-title"><b>Explaining what it is </b></p>
+            <a href="https://www.ifrcvca.org/what-is-evca">
+              <button type="button">Action Plan</button> <br>
+              <button type="button">Contingency Plan</button> <br>
+              <button type="button">Community profile</button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div id="mainContainer">
+        <div id="mapContainer">
+          <div id="viewDiv" class="mapView"></div>
+         
+         <calcite-shell-panel slot="panel-start" display-mode="float">
+            <calcite-action-bar slot="action-bar">
+              <calcite-action data-action-id="layers" icon="layers" text="Layers"></calcite-action>
+              <calcite-action data-action-id="basemaps" icon="basemap" text="Basemaps"></calcite-action>
+              <calcite-action data-action-id="legend" icon="legend" text="Legend"></calcite-action>
+              <calcite-action data-action-id="bookmarks" icon="bookmark" text="Bookmarks"></calcite-action>
+              <calcite-action data-action-id="print" icon="print" text="Print"></calcite-action>
+              <calcite-action data-action-id="information" icon="information" text="Information"></calcite-action>
+            </calcite-action-bar>
+            <!-- Map-specific panels (each one provides a div for ArcGIS Maps SDK for JavaScript widgets) -->
+            <calcite-panel heading="Layers" height-scale="l" data-panel-id="layers" hidden>
+              <div id="layers-container"></div>
+            </calcite-panel>
+            <calcite-panel heading="Basemaps" height-scale="l" data-panel-id="basemaps" hidden>
+              <div id="basemaps-container"></div>
+            </calcite-panel>
+            <calcite-panel heading="Legend" height-scale="l" data-panel-id="legend" hidden>
+              <div id="legend-container"></div>
+            </calcite-panel>
+            <calcite-panel heading="Bookmarks" height-scale="l" data-panel-id="bookmarks" hidden>
+              <div id="bookmarks-container"></div>
+            </calcite-panel>
+            <calcite-panel heading="Print" height-scale="l" data-panel-id="print" hidden>
+              <div id="print-container"></div>
+            </calcite-panel>
+           </calcite-shell-panel> 
+        </div>
+        <div id="infoBoxes">
+          <div class="box-size">
+            <p class="box-title"><b>Resilience Dimension</b></p>
+            <div id="info-links">
+           <calcite-action data-action-id="Risk management" text="Risk management" text-enabled></calcite-action>
+              <calcite-action data-action-id="Health" text="Health" text-enabled></calcite-action>
+              <calcite-action data-action-id="Shelter" text="Shelter" text-enabled></calcite-action>
+              <calcite-action data-action-id="Food & nutrition security" text="Food & nutrition security" text-enabled></calcite-action>
+              <calcite-action data-action-id="Social cohesion" text="Social cohesion" text-enabled></calcite-action>
+              <calcite-action data-action-id="Inclusion" text="Inclusion" text-enabled></calcite-action>
+              <calcite-action data-action-id="Economic opportunities" text="Economic opportunities" text-enabled></calcite-action>
+              <calcite-action data-action-id="Infrastructure & structure" text="Infrastructure & structure" text-enabled></calcite-action>
+              <calcite-action data-action-id="Natural Resource management" text="Natural Resource management" text-enabled></calcite-action>
+              <calcite-action data-action-id="Connectedness" text="Connectedness" text-enabled></calcite-action>
+                <calcite-action data-action-id="Water & Sanitation" text="Water & Sanitation" text-enabled></calcite-action>
+            </div>
+          </div>
+    
+          <div class="box-size">
+            <p class="box-title1"><b>Vulnerability</b></p>
+            <div id="box1">
+              <p id="hazardTitle1">summary of vulnerability context Information per resilience dimension</p>
+              <div id="box1Content"></div> <!-- Updated content container -->
+            </div>
+          </div>
+          <div class="box-size">
+            <p class="box-title2"><b>Capacity</b></p>
+            <div id="box2">
+              <p id="durationTitle2">Summary of capacity context information per resilience dimension: </p>
+              <div id="box2Content"></div> <!-- Updated content container -->
+          </div>
+    </div>
+          <div id="para">
+            <p class="box-title"><b>Dimension to prioritize</b></p>
+            <div class="icon-display">
+              <a href="#">❤️ Health</a> <br>
+              <a href="#">🏠 Shelter</a> <br>
+              <a href="#">💸 Economic opportunities </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </body>
+    
+    </html>
+     <script src="https://js.arcgis.com/calcite-components/1.8.0/calcite.esm.js" type="module"></script>
+        <link rel="stylesheet" href="https://js.arcgis.com/calcite-components/1.8.0/calcite.css" />
+        <script src="https://js.arcgis.com/4.27/"></script>
+    
+        <link disabled id="arcgis-maps-sdk-theme-dark" rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/dark/main.css" />
+    
+        <link id="arcgis-maps-sdk-theme-light" rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css" />
+    
+    
+    <script>
+    require([
+  "esri/WebMap",
+  "esri/views/MapView",
+  "esri/widgets/Bookmarks",
+  "esri/widgets/BasemapGallery",
+  "esri/widgets/LayerList",
+  "esri/widgets/Legend",
+  "esri/widgets/Print",
+  "esri/layers/FeatureLayer"
+], function(WebMap, MapView, Bookmarks, BasemapGallery, LayerList, Legend, Print, FeatureLayer) {
+  const webmapId = ["5f9309a2a54043c6b454a4f92e4c53ab"];
+  const viewDivs = ["viewDiv"];
+  const views = [];
+
+  const map = new WebMap({
+    portalItem: {
+      id: webmapId
+    }
+  });
+
+  const view = new MapView({
+    map,
+    container: viewDivs[0],
+    padding: {
+      left: 49
+    }
+  });
+
+  view.ui.move("zoom", "bottom-right");
+  views.push(view);
+
+  views.forEach(function(view) {
+    view.on("pointer-drag", function() {
+      synchronizeViews(view);
+    });
+
+    view.watch("zoom", function() {
+      synchronizeViews(view);
+    });
+  });
+
+  function synchronizeViews(currentView) {
+    views.forEach(function(view) {
+      if (view !== currentView) {
+        view.extent = currentView.extent;
+      }
+    });
+  }
+
+  const layerUrl = "https://services7.arcgis.com/WOCTeelWa8YfhXRF/arcgis/rest/services/Lebanon_510/FeatureServer/0";
+  const title = "Lebanon_510";
+  const visible = true;
+  const outFields = ["Municipality"];
+
+  const layer = new FeatureLayer({
+    url: layerUrl,
+    title,
+    visible,
+    outFields
+  });
+
+  map.add(layer);
+
+  map.when(() => {
+    const {
+      title,
+      description,
+      thumbnailUrl,
+      avgRating
+    } = map.portalItem;
+    const headerTitle = document.querySelector(`#${viewDivs[i]}-header-title`);
+    const itemDescription = document.querySelector(`#${viewDivs[i]}-item-description`);
+    const itemThumbnail = document.querySelector(`#${viewDivs[i]}-item-thumbnail`);
+    const itemRating = document.querySelector(`#${viewDivs[i]}-item-rating`);
+
+    if (headerTitle) headerTitle.textContent = title;
+    if (itemDescription) itemDescription.innerHTML = description;
+    if (itemThumbnail) itemThumbnail.src = thumbnailUrl;
+    if (itemRating) itemRating.value = avgRating;
+  });
+
+  // Add an event listener for the district select element
+  const districtSelect = document.getElementById("districtSelect");
+
+  districtSelect.addEventListener("input", (e) => {
+    selectedDistrict = e.target.value;
+    updateVulnerabilityAndCapacity(selectedDimension);
+
+    // Add this block of code
+    const layer = map.layers.find((l) => l.title === "Lebanon_510");
+    if (layer) {
+      if (selectedDistrict === "Select All" || selectedDistrict === "") {
+        layer.definitionExpression = "";
+      } else {
+        layer.definitionExpression = `Municipality = '${selectedDistrict}'`;
+      }
+    }
+  });
+
+  fetch(`${layerUrl}/query?where=1%3D1&outFields=Municipality&returnDistinctValues=true&f=json`)
+    .then((response) => response.json())
+    .then(({ features }) => {
+      const districtsDatalist = document.getElementById("districts");
+      const muniValues = [];
+
+      features.forEach(({ attributes }) => {
+        const muniValue = attributes.Municipality;
+        if (muniValue &&!muniValues.includes(muniValue)) {
+          muniValues.push(muniValue);
+        }
+      });
+
+      muniValues.forEach((muniValue) => {
+        const option = document.createElement("option");
+        option.value = muniValue;
+        districtsDatalist.appendChild(option);
+      });
+
+      districtSelect.setAttribute("list", "districts");
+
+      districtSelect.addEventListener("input", (e) => {
+           });
+
+      function resetDropdownOnSearch() {
+        districtSelect.value = "";
+       
+      }
+
+      districtSelect.addEventListener("focus", () => {
+        resetDropdownOnSearch();
+      });
+
+      function resetDropdown() {
+        districtSelect.value = "";
+        
+      } 
+
+      const clearButton = document.getElementById("clearButton");
+      clearButton.addEventListener("click", () => {
+        resetDropdown();
+      });
+    });
+fetch("https://services7.arcgis.com/WOCTeelWa8YfhXRF/arcgis/rest/services/Hazards_and_Exposure/FeatureServer/2/query?where=1%3D1&outFields=hazard_event&returnDistinctValues=true&f=json")
+  .then((response) => response.json())
+  .then(({ features }) => {
+    const hazardsDropdown = document.getElementById("hazardSelect");
+    const hazardValues = [];
+
+    features.forEach(({ attributes }) => {
+      const hazardValue = attributes.hazard_event;
+      if (hazardValue && !hazardValues.includes(hazardValue)) {
+        hazardValues.push(hazardValue);
+      }
+    });
+
+    ////////////////
+    // Select all calcite-action elements
+    const calciteActions = document.querySelectorAll('calcite-action');
+
+    // Add a click event listener to each calcite-action element
+    calciteActions.forEach((action) => {
+      action.addEventListener('click', () => {
+        const dataActionId = action.getAttribute('data-action-id');
+        console.log(`Selected Value: ${dataActionId}`);
+        updateVulnerabilityAndCapacity(dataActionId);
+      });
+    });
+
+    const headerTitle = document.querySelector(`#${viewDivs[i]}-header-title`);
+    views.forEach((view) => {
+
+      const hazardsLayer = new FeatureLayer({
+        url: "https://services7.arcgis.com/WOCTeelWa8YfhXRF/arcgis/rest/services/Hazards_and_Exposure/FeatureServer/2",
+        title: "Hazards",
+        visible: true,
+        outFields: ["*"]
+      });
+
+      view.map.add(hazardsLayer);
+    });
+  });
+  const basemaps = new BasemapGallery({
+    view,
+    container: "basemaps-container"
+  });
+
+  const bookmarks = new Bookmarks({
+    view,
+    container: "bookmarks-container"
+  });
+
+  const layerList = new LayerList({
+    view,
+    selectionEnabled: true,
+    container: "layers-container"
+  });
+
+  const legend = new Legend({
+    view,
+    container: "legend-container"
+  });
+
+  const print = new Print({
+    view,
+    container: "print-container"
+  });
+
+  let activeWidget;
+
+  const handleActionBarClick = ({
+    target
+  }) => {
+    if (target.tagName !== "CALCITE-ACTION") {
+      return;
+    }
+
+    if (activeWidget) {
+      document.querySelector(`[data-action-id=${activeWidget}]`).active = false;
+      document.querySelector(`[data-panel-id=${activeWidget}]`).hidden = true;
+    }
+
+    const nextWidget = target.dataset.actionId;
+    if (nextWidget !== activeWidget) {
+      document.querySelector(`[data-action-id=${nextWidget}]`).active = true;
+      document.querySelector(`[data-panel-id=${nextWidget}]`).hidden = false;
+      activeWidget = nextWidget;
+    } else {
+      activeWidget = null;
+    }
+  };
+
+  document.querySelector("calcite-action-bar").addEventListener("click", handleActionBarClick);
+
+  let actionBarExpanded = false;
+
+  document.addEventListener("calciteActionBarToggle", event => {
+    actionBarExpanded = !actionBarExpanded;
+    view.padding = {
+      left: actionBarExpanded ? 150 : 49
+    };
+  });
+
+  document.querySelector("calcite-shell").hidden = false;
+  document.querySelector("calcite-loader").hidden = true;
+});
+
+
+
+const calciteShell = document.querySelector("calcite-shell");
+if (calciteShell) {
+  calciteShell.hidden = false;
+}
+
+let selectedDistrict = null;
+let selectedDimension = null;
+
+function updateVulnerabilityAndCapacity(dimensionTitle) {
+  const vulnerabilityContent = document.getElementById("durationTitle2");
+  const capacityContent = document.getElementById("hazardTitle1");
+
+  if (dimensionTitle === selectedDimension) {
+    vulnerabilityContent.textContent = "";
+    capacityContent.textContent = "";
+    selectedDimension = null;
+    document.getElementById("durationTitle2").textContent = `Select a Resilience Dimension for ${selectedDistrict}`;
+    document.getElementById("hazardTitle1").textContent = `Select a Resilience Dimension for ${selectedDistrict}`;
+  } else {
+    selectedDimension = dimensionTitle;
+
+    
+    const districtSpecificContent = getDistrictSpecificContent(selectedDistrict, dimensionTitle);
+    
+    if (districtSpecificContent) {
+      vulnerabilityContent.textContent = districtSpecificContent.vulnerability;
+      capacityContent.textContent = districtSpecificContent.capacity;
+    } else {
+      vulnerabilityContent.textContent = `No data available for ${dimensionTitle} in ${selectedDistrict}`;
+      capacityContent.textContent = `No data available for ${dimensionTitle} in ${selectedDistrict}`;
+    }
+  }
+}
+
+function getDistrictSpecificContent(district, dimensionTitle) {
+  
+  
+ if (district === "Al Masaken Al Chaabiyah") {
+    switch (dimensionTitle) {
+      case "Risk management":
+        return {
+          vulnerability: "Not Available",
+          capacity: "A database of buildings at risk of collapse"
+        };
+      case "Health":
+        return {
+          vulnerability: "Not Available.",
+          capacity: "A PHCC in the community"
+        };
+      case "Water & Sanitation":
+        return {
+          vulnerability: "Not Available",
+          capacity: "Not Available"
+        };
+      case "Shelter":
+        return {
+          vulnerability: "Cracking buildings",
+          capacity: "Manpower and human resources expertise at the community level"
+        };
+      case "Food & nutrition security":
+        return {
+          vulnerability: "Not Available",
+          capacity: "Continuous free bread distrubution twice per week"
+        };
+      case "Social cohesion":
+        return {
+          vulnerability: "Not Available",
+          capacity: "Not Available"
+        };
+      case "Inclusion":
+        return {
+          vulnerability: "Not Available",
+          capacity: "All vulnerable groups in the community are included in the activities such as syrians, palestinians and people with disabilities"
+        };
+      case "Economic opportunities":
+        return {
+          vulnerability: "high percentage of unemployed people,few children are out of school",
+          capacity: "Limited financial support from expatriates to the owners of the most damaged buildings (about 10) to carry out the necessary renovations"
+        };
+      case "Infrastructure & structure":
+        return {
+          vulnerability: "poor sewage system,poor electricity system",
+          capacity: "Manpower and expertise at the community level"
+        };
+      case "Natural Resource management":
+        return {
+          vulnerability: "The geographical position of the coomunity (below the sea level)",
+          capacity: "Sea near the community"
+        };
+      case "Connectedness":
+        return {
+          vulnerability: "Conflict with the municipality",
+          capacity: "Not Available"
+        };
+      default:
+        return null;
+    }
+  } else if (district === "Falougha") {
+    switch (dimensionTitle) {
+      case "Risk management":
+        return {
+          vulnerability: "Winter Storm: Lack of risk awareness sessions. Absence of a hotline with the municipality. Residents' unawareness of existing vulnerabilities to determine necessary actions.Forest Fire: Lack of awareness sessions about risks.  Absence of a hotline with the municipality. Residents' lack of awareness of the existing vulnerabilities to know the necessary actions to take.Soil Erosion: Absence of risk awareness sessions. Lack of a hotline with the municipality. Residents' unawareness of the existing weaknesses to know the necessary actions to take.",
+          capacity: "Winter storms: Municipal and municipal police surveillance for firefighting, Preparation of snowplows and taking some preemptive measures. Forest Fire: Preparation of snowplows and taking some preemptive measures. Soil Erosion:Not available."
+        };
+      case "Health":
+        return {
+          vulnerability: "Winter storms:  Absence of all medications in the clinic. Forest Fires:  Lack of all medical specialties, meaning a shortage in medical staff. Soil Erosion: Not Available.",
+          capacity: "Winter Storms: The presence of a relief association to support patients, which helps the community by securing their basic needs. The presence of the Red Cross center and the mountain hospital. Forest Fire: The presence of a relief association to support patients, which helps the community by securing their basic needs.  The presence of the Red Cross center and the mountain hospital. Soil Erosion: The presence of a relief association to support patients, which helps the community by securing their basic needs. The presence of the Red Cross center and the mountain hospital."
+        };
+      case "Water & Sanitation":
+        return {
+          vulnerability: "Not Available",
+          capacity: "Winter Storm: Not Available. Forest Fire: Availability of springs for drinking water. Soil Erosion: Not Available."
+        };
+      case "Shelter":
+        return {
+          vulnerability: "Winter storms: Old and unprepared homes to face risks.  There is no equipped shelter in case of epidemics or crises.Forest fires: There is no equipped place in case of epidemics or crises.Soil Erosion:  There is no equipped place in case of epidemics or crises. Old and unprepared homes to face risks.",
+          capacity: "Not Available"
+        };
+      case "Food & nutrition security":
+        return {
+          vulnerability: "Winter Storms: Inability to supply due to economic conditions Landslides & Forest Fire: Not Available",
+          capacity: "Continuous free bread distrubution twice per week"
+        };
+      case "Social cohesion":
+        return {
+          vulnerability: "Not Available",
+          capacity: "Not Available"
+        };
+      case "Inclusion":
+        return {
+          vulnerability: "Winter Storms: Weak participation among people with special needs and women in decision-making. Soil erosion: Lack of coordination between donor agencies to assist those in need, Absence of social cohesion regarding people with special needs. Forest Fires: Weak participation among people with special needs and women in decision-making ",
+          capacity: "All vulnerable groups in the community are included in the activities such as syrians, palestinians and people with disabilities"
+        };
+      case "Economic opportunities":
+        return {
+          vulnerability: "Winterstorms:-The absence of factories to provide job opportunities for residents in the locality. The increase in prices of primary resources for crisis production.                                                                             Soil erosion & Forest Fire: Not Available ",
+          capacity: "Limited financial support from expatriates to the owners of the most damaged buildings (about 10) to carry out the necessary renovations"
+        };
+      case "Infrastructure & structure":
+        return {
+          vulnerability: "Winter Storms: Lack of necessary facilities during storms and snow. Soil erosion & Forest fire:The lack of maintenance and updates for electrical wires. ",
+          capacity: "Manpower and expertise at the community level"
+        };
+      case "Natural Resource management":
+        return {
+          vulnerability: "Not Available ",
+          capacity: "Sea near the community"
+        };
+      case "Connectedness":
+        return {
+          vulnerability: "Winter Storms: Unawareness of networking at the national and provincial levels,Soil erosion & Forest Fires: Residents unawareness of existing weaknesses to know the necessary actions to take.",
+          capacity: "Not Available"
+  };
+default:
+  return null;}
+} else if (district === "Aarsal") {
+    switch (dimensionTitle) {
+      case "Risk management":
+        return {
+          vulnerability: "Reduction in healthcare services and protective equipment (lack of advanced medical care such as pediatric care)",
+          capacity: "There is a large human cadre of volunteers to help manage the crisis."
+        };
+      case "Health":
+        return {
+          vulnerability: "Reduction in healthcare services and protective equipment (lack of advanced medical care such as pediatric care",
+          capacity: "Establishment of field hospitals Active associations (Médecins Sans Frontières and Relief supporting clinics, healthcare centers"
+        };
+      case "Water & Sanitation":
+        return {
+          vulnerability: "The mixing of drinking water with sewage. There were water taps, but due to the abundance of camps and sanitary shortcomings, the water became contaminated, and they could no longer use tap water",
+          capacity: "The Qatari Red Crescent implemented a water purification project, extracting clean water and distributing it to the camps through LOST, with tanks secured by the municipality for distributing water to the town (but the quantity is insufficient)."
+        };
+      case "Shelter":
+        return {
+          vulnerability: "There are some shelter places, but they are not properly equipped",
+          capacity: "There is widespread interest from organizations in shelters, A trained team on shelter management "
+        };
+      case "Food & nutrition security":
+        return {
+          vulnerability: "There are insufficient supply stores",
+          capacity: "There are flour warehouses and bakeries that help manage the crisis,There are two flour stores"
+        };
+      case "Social cohesion":
+        return {
+          vulnerability: "Not Available",
+          capacity: "Not Available"
+        };
+      case "Inclusion":
+        return {
+          vulnerability: "Not available ",
+          capacity: "All plans include all categories. The opinions of individuals with special needs are taken into account"
+        };
+      case "Economic opportunities":
+        return {
+          vulnerability: "Most of the opportunities are given to the refugees ",
+          capacity: "There are many shops in the area that can benefit the citizens and employ them "
+        };
+      case "Infrastructure & structure":
+        return {
+          vulnerability: "Poor maintenance of roads, infrastructure, and various types of machinery ",
+          capacity: "There are minimal plans and projects to address infrastructure, but financial resources do not allow this"
+        };
+      case "Natural Resource management":
+        return {
+          vulnerability: "Natural resources are not properly monitored for conservation ",
+          capacity: "In the past, there was no interest or policies for natural resources"
+        };
+      case "Connectedness":
+        return {
+          vulnerability: "There are good relations with municipalities and active organizations in the region.",
+          capacity: "Not Available"
+  };
+default:
+  return null;
+}
+    } else if (district === "Beirut") {
+
+  }
+
+  return null;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const initialData = {
+    labels: ["1.Risk Management", "2.Health", "3.Water & Sanitation", "4.Shelter", "5.Food & Nutrition Security", "6.Social Cohesion", "7.Inclusion", "8.Economic Opportunities", "9.Infrastructure & Services", "10.Natural Resource Management", "11.Connectedness"],
+    datasets: [{
+      label: "Community Score",
+      backgroundColor: function (context) {
+        var value = context.dataset.data[context.dataIndex];
+        return value >= 3 ? "rgba(255, 0, 0, 0.5)" :
+          value >= 2 ? "rgba(255, 165, 0, 0.5)" :
+            value >= 1 ? "rgba(0, 128, 0, 0.5)" :
+              value >= 0 ? "rgba(210, 105, 30, 0.5)" :
+                "rgba(173, 216, 230, 0.5)";
+      },
+      borderColor: function (context) {
+        var value = context.dataset.data[context.dataIndex];
+        return value >= 3 ? "rgba(255, 0, 0, 0.5)" :
+          value >= 2 ? "rgba(255, 165, 0, 0.5)" :
+            value >= 1 ? "rgba(0, 128, 0, 0.5)" :
+              value >= 0 ? "rgba(210, 105, 30, 0.5)" :
+                "rgba(173, 216, 230, 0.5)";
+      },
+      borderWidth: 2,
+      pointRadius: 4,
+      pointBackgroundColor: function (context) {
+        var value = context.dataset.data[context.dataIndex];
+        return value >= 3 ? "rgba(255, 0, 0, 0.5)" :
+          value >= 2 ? "rgba(255, 165, 0, 0.5)" :
+            value >= 1 ? "rgba(0, 128, 0, 0.5)" :
+              value >= 0 ? "rgba(210, 105, 30, 0.5)" :
+                "rgba(173, 216, 230, 0.5)";
+      },
+      data: [0, 0.5, 1, 1.5, 2, 2.5, 3]
+    }]
+  };
+
+  const radarCanvas = document.getElementById("radarChart");
+  const radarContext = radarCanvas.getContext("2d");
+
+  const radarChart = new Chart(radarContext, {
+    type: 'radar',
+    data: initialData,
+    options: {
+      scale: {
+        ticks: {
+          beginAtZero: true,
+          max: 3 // Maximum score
+        }
+      }
+    }
+  });
+
+  function updateHazardExposureBasedOnDistrict(selectedDistrict, hazardName) {
+    function updateRadarChart(scores) {
+      radarChart.data.datasets[0].data = scores;
+      radarChart.update();
+    }
+
+    let scores;
+
+    switch (hazardName) {
+      case "Building collapse":
+        scores = [3, 3, 1, 3, 0, 1, 1, 3, 3, 1, 1]; // Scores for Building collapse
+        break;
+      case "Fires (due to unorganized power networks)":
+        scores = [3, 2, 1, 1, 1, 0, 1, 2, 2, 1, 1]; // Scores for Fires (due to unorganized power networks)
+        break;
+      case "Flash flood":
+        scores = [3, 2, 3, 2, 1, 0, 1, 2, 3, 1, 1]; // Scores for Flash flood
+        break;
+        case "Forest Fire":
+        scores = [2, 2, 3, 0, 3, 2, 2, 1, 1, 1, 1]; // Scores for Building collapse
+        break;
+      case "Winter Storm":
+        scores = [3, 2, 1, 1, 1, 0, 1, 2, 2, 1, 1]; // Scores for Fires (due to unorganized power networks)
+        break;
+      case "Soil Erosion":
+        scores = [3, 2, 3, 2, 1, 0, 1, 2, 3, 1, 1]; // Scores for Flash flood
+        break;
+        case "Snow storms":
+        scores = [3, 3, 3, 3, 0, 2, 2, 3, 3, 2, 3]; // Scores for Building collapse
+        break;
+      case "Armed conflict":
+        scores = [1, 2, 3, 2, 2, 2, 0, 2, 2, 2, 2]; // Scores for Fires (due to unorganized power networks)
+        break;
+      case "Flood":
+        scores = [3, 3, 3, 2, 2, 2, 0, 2, 2, 2, 1]; // Scores for Flash flood
+        break;
+      default:
+        scores = Array.from({ length: 11 }, () => 0); // Default to all zeros
+    }
+    
+
+     updateRadarChart(scores);
+  updateHazardExposure(selectedDistrict, hazardName); // Pass the hazard name
+}
+
+    const districtSelect = document.getElementById("districtSelect");
+
+    function updateFilter(value) {
+        console.log(`Selected District: ${value}`);
+        updateHazardExposureBasedOnDistrict(value);
+    }
+
+    districtSelect.addEventListener("input", (e) => {
+        updateFilter(e.target.value);
+    });
+
+    function updateHazardExposure(district) {
+        const hazardBoxes = document.querySelectorAll(".hazard-box");
+
+        let hazardDetails = [];
+
+        switch (district) {
+            case "Aarsal":
+                hazardDetails = [
+                    { name: "Snow storms", icon: "❄️", details: getHazardDetails("Snow storms","Aarsal") },
+                    { name: "Armed conflict", icon: "🔫", details: getHazardDetails("Armed conflict","Aarsal") },
+                    { name: "Flood", icon: "🌊", details: getHazardDetails("Flood","Aarsal") }
+                ];
+                break;
+            case "Falougha":
+    hazardDetails = [
+      { name: "Forest Fire", icon: "🔥", details: getHazardDetails("Forest Fire","Falougha") },
+      { name: "Winter Storm", icon: "❄️", details: getHazardDetails("Winter Storm", "Falougha") },
+     { name: "Soil Erosion", icon: "🌱💧🌊", details: getHazardDetails("Soil Erosion","Falougha") }
+    ];
+    break;
+             case "Al Masaken Al Chaabiyah":
+    hazardDetails = [
+      { name: "Building collapse", icon: "🔥💥🏢", details: getHazardDetails("Building collapse", "Al Masaken Al Chaabiyah") },
+      { name: "Fires (due to unorganized power networks)", icon: "🔥", details: getHazardDetails("Fires", "Al Masaken Al Chaabiyah") },
+      { name: "Flash flood", icon: "🌊", details: getHazardDetails("Flash flood", "Al Masaken Al Chaabiyah") }
+    ];
+    break;
+            default:
+                
+                hazardDetails = [];
+                break;
+        }
+
+        hazardBoxes.forEach((hazardBox, index) => {
+            const hazardInfo = hazardDetails[index];
+            updateHazardBox(hazardBox, hazardInfo);
+        });
+    }
+
+    function updateHazardBox(hazardBox, hazardInfo) {
+        if (hazardBox && hazardInfo) {
+            hazardBox.innerHTML = `<div>${hazardInfo.icon}</div><div>${hazardInfo.name}</div>`;
+            hazardBox.addEventListener("click", () => {
+                updateHazardExposureDetails(hazardInfo.details);
+              updateHazardExposureBasedOnDistrict(selectedDistrict, hazardInfo.name); 
+            });
+        } else {
+            hazardBox.innerHTML = ""; 
+        }
+    }
+
+    function getHazardDetails(hazardName, district) {
+        if (hazardName === "Winter storms" && district === "Aarsal") {
+            return {
+                causeOrigin: " Cause/Origin: Temperature drop",
+                warningSigns: "Warning Signs:Temperature drop",
+                warningReceptionMethods: " warningReceptionMethods: Weather forecasts based on storm intensity and strength",
+                fallingSpeed: "fallingSpeed: Depending on the weather",
+                repetitionSeasonalRisk: "repetitionSeasonalRisk: Every Snow Storm",
+                duration: "duration: 15 Days",
+                exposedIndividuals: "exposedIndividuals:Entire Ersal Area",
+                exposedPlaces: "exposedPlaces: Entire Ersal Area",
+                earlyMeasures: "earlyMeasures: Preparing vehicles for snow removal, Preparing salt for ice melting",
+                risksAssociated: "risksAssociated: Closing roads, Isolating the area, Tent collapse affected by the amount of ice"
+              
+            };
+        }
+       if (hazardName === "Winter Storm" && district === "Falougha") {
+    return {
+      causeOrigin: " Cause/Origin: Winter season",
+      warningSigns: "WarningSigns:CNRS ..News",
+      warningReceptionMethods: " Receiving Warning Signs: ",
+      fallingSpeed: "Lead Time:",
+      repetitionSeasonalRisk: "Frequency: Yearly",
+      duration: "Duration: Hours to Days",
+      exposedIndividuals: "Exposed People:Citizens facing economic barriers to preparedness.",
+      exposedPlaces: "Exposed Area: Entire  Area",
+      earlyMeasures: "earlyMeasures: Heating, snow chains.,Preparing vehicles for snow",
+      risksAssociated: "risksAssociated: Soil erosion, flooding due to increased rainfall, and ice formation.s"
+    };
+  }
+       if (hazardName === "Forest Fire" && district === "Falougha") {
+    return {
+      causeOrigin: " Cause/Origin:It may be: - Deliberate (for housing, selling branches) - Natural (pollution) - Camping – Failure to clean forest lands",
+      warningSigns: "Warning Signs:Varies according to factors (air, location, occurrence",
+      warningReceptionMethods: " Receiving Warning signs:Forest fires may be deliberate or natural, influenced by factors like air and location; the municipality and citizens take action based on forecasts, with patrols and oversight to prevent material and human losses, including choking and pollution.",
+      fallingSpeed: "Lead Time: Moderate",
+      repetitionSeasonalRisk: "Speed of Onset: Sudden",
+      duration: "Duration: Hourly",
+      exposedIndividuals: "Frequency:Yearly",
+      exposedPlaces: "Exposed People: Houses located in the nearby geographic range of forests.",
+      earlyMeasures: "  Early Measures: Municipal oversight through police patrols conducting rounds every few hours.",
+      risksAssociated: "Risks Associated: injuries "
+    };
+ }
+      if (hazardName === "Soil Erosion" && district === "Falougha") {
+    return {
+      causeOrigin: " Cause/Origin: Sandy soil - Heavy unexpected rainfall.",
+      warningSigns: "Warning Signs: Not Available",
+      warningReceptionMethods: " Receiving Warning signs:The citizens and the municipal police.",
+      fallingSpeed: "Lead Time: Moderate",
+      repetitionSeasonalRisk: "Speed of Onset: Sudden",
+      duration: "Duration:It varies according to the amount of rainfall in the winter season.",
+      exposedIndividuals: "Frequency:Yearly",
+      exposedPlaces: "Exposed People: The residents and houses of the affected area and its surroundings.",
+      earlyMeasures: "  Early Measures: Repairing supporting walls in the area of Harf al-Kurdi - supporting the wall near Wissam Restaurant (Najwa Shamoun's house).",
+      risksAssociated: "Risks Associated: Damage to trees and their falling - material damage. "
+    };
+ }
+      if (hazardName === "Building collapse" && district === "Al Masaken Al Chaabiyah") {
+    return {
+      causeOrigin: " Cause/Origin: Building cracking-Illegal Construction",
+      warningSigns: "Warning Signs:Extended crack over days",
+      warningReceptionMethods: " Receiving Warning signs: N/A",
+      fallingSpeed: "Lead Time: Fast",
+      repetitionSeasonalRisk: "Speed of Onset: Slow",
+      duration: "Duration: Minutes",
+      exposedIndividuals: "Frequency:Monthly",
+      exposedPlaces: "Exposed People: All of the community",
+      earlyMeasures: "  Early Measures: Maintenance of the buildings on a personal level",
+      risksAssociated: "Risks Associated: injuries and properties damage "
+    };
+ }
+      if (hazardName === "Fires" && district === "Al Masaken Al Chaabiyah") {
+    return {
+      causeOrigin: " Cause/Origin:There is no organized electrical network",
+      warningSigns: "Warning Signs:Uncovered electirc cable",
+      warningReceptionMethods: " Receiving Warning signs: N/A",
+      fallingSpeed: "Lead Time: Fast",
+      repetitionSeasonalRisk: "Speed of Onset: Sudden",
+      duration: "Duration: Minutes",
+      exposedIndividuals: "Frequency:Monthly",
+      exposedPlaces: "Exposed People: All of the community",
+      earlyMeasures: "  Early Measures: N/A",
+      risksAssociated: "Risks Associated: injuries "
+    };
+ }
+      if (hazardName === "Flash flood" && district === "Al Masaken Al Chaabiyah") {
+    return {
+      causeOrigin: " Cause/Origin:Blocked sewage system",
+      warningSigns: "Warning Signs:heavy rainfall",
+      warningReceptionMethods: " Receiving Warning signs: N/A",
+      fallingSpeed: "Lead Time: Moderate",
+      repetitionSeasonalRisk: "Speed of Onset: Sudden",
+      duration: "Duration: Days",
+      exposedIndividuals: "Frequency:Yearly",
+      exposedPlaces: "Exposed People: All of the community",
+      earlyMeasures: "  Early Measures: some sand bags at the entrance of ground floor households",
+      risksAssociated: "Risks Associated: injuries "
+    };
+ }
+      if (hazardName === "Flash flood" && district === "Al Masaken Al Chaabiyah") {
+    return {
+      causeOrigin: " Cause/Origin:Blocked sewage system",
+      warningSigns: "Warning Signs:heavy rainfall",
+      warningReceptionMethods: " Receiving Warning signs: N/A",
+      fallingSpeed: "Lead Time: Moderate",
+      repetitionSeasonalRisk: "Speed of Onset: Sudden",
+      duration: "Duration: Days",
+      exposedIndividuals: "Frequency:Yearly",
+      exposedPlaces: "Exposed People: All of the community",
+      earlyMeasures: "  Early Measures: some sand bags at the entrance of ground floor households",
+      risksAssociated: "Risks Associated: injuries "
+    };
+ }
+      if (hazardName === "Flood" && district === "Aarsal") {
+    return {
+      causeOrigin: " Cause/Origin:Natural, Heavy Rainfall",
+      warningSigns: "Warning Signs:heavy rainfall",
+      warningReceptionMethods: " Receiving Warning signs: Meteorological",
+      fallingSpeed: "Lead Time: Weeks",
+      repetitionSeasonalRisk: "Speed of Onset: Sudden",
+      duration: "Duration: Days",
+      exposedIndividuals: "Frequency:Days",
+      exposedPlaces: "Exposed People: Syrian camps",
+      earlyMeasures: "  Early Measures: Communicate with civil society organizations to assist in the response, Preparing water extraction equipment",
+      risksAssociated: "Risks Associated: The tents were flooded and destroyed,House damage,Infectious diseases"
+    };
+ }
+       if (hazardName === "Armed conflict" && district === "Aarsal") {
+    return {
+      causeOrigin: " Cause/Origin:Political Reasons, Syrian refugees crisis",
+      warningSigns: "Warning Signs:N/A",
+      warningReceptionMethods: " Receiving Warning signs: N/A",
+      fallingSpeed: "Lead Time: Days",
+      repetitionSeasonalRisk: "Speed of Onset: Sudden",
+      duration: "Duration: Days",
+      exposedIndividuals: "Frequency:Days",
+      exposedPlaces: "Exposed People: The whole town",
+      earlyMeasures: "  Early Measures: Deployment of the army and security forces,District Events Assistantt",
+      risksAssociated: "Risks Associated: Material and human losses"
+    };
+ }
+     if (hazardName === "Snow storms" && district === "Aarsal") {
+    return {
+      causeOrigin: " Cause/Origin: Natural Causes",
+      warningSigns: "Warning Signs:Decrease in tempreature",
+      warningReceptionMethods: " Receiving Warning signs: Meteorological ",
+      fallingSpeed: "Lead Time: Weeks",
+      repetitionSeasonalRisk: "Speed of Onset: Sudden",
+      duration: "Duration: Yearly",
+      exposedIndividuals: "Frequency: Yearly",
+      exposedPlaces: "Exposed People: The whole town",
+      earlyMeasures: "  Early Measures: Machinery equipment. Preparing the municipal staff to deal with the event",
+      risksAssociated: "Risks Associated: Isolate the town,Cut off all resources from the area, The tents of displaced Syrians are demolished"
+    };
+ }
+        else {
+            // Placeholder for other hazards
+            return {};
+        }
+    }
+
+    function updateHazardExposureDetails(details) {
+        const hazardExposureBoxes = document.querySelectorAll(".hazard-exposure");
+
+        if (details) {
+            const {
+                causeOrigin,
+                warningSigns,
+                warningReceptionMethods,
+                fallingSpeed,
+                repetitionSeasonalRisk,
+                duration,
+                exposedIndividuals,
+                exposedPlaces,
+                earlyMeasures,
+                risksAssociated
+            } = details;
+
+            const exposureDetails = [
+                causeOrigin,
+                warningSigns,
+                warningReceptionMethods,
+                fallingSpeed,
+                repetitionSeasonalRisk,
+                duration,
+                exposedIndividuals,
+                exposedPlaces,
+                earlyMeasures,
+                risksAssociated
+            ];
+
+            hazardExposureBoxes.forEach((box, index) => {
+                box.innerHTML = `<div><b>${exposureDetails[index]}</b></div>`;
+            });
+
+        } else {
+            hazardExposureBoxes.forEach((box) => {
+                box.innerHTML = ""; 
+            });
+        }
+    }
+
+});
+
+      
+    </script>
+    </html>
+<!-- partial -->
+  
+</body>
+</html>
